@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
     </padding>
+    <top>
+        <ToolBar>
+            <padding>
+                <Insets bottom="4.0" top="4.0"/>
+            </padding>
+            <Button text="%name.wind.tools.eq2.lp.openFile" onAction="#openFile"/>
+        </ToolBar>
+    </top>
     <center>
         <TreeTableView fx:id="eventTreeTableView" prefHeight="200.0" prefWidth="200.0" showRoot="false" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            </padding>
             <!--<columns>-->
                 <!--<TreeTableColumn fx:id="identifierColumn" maxWidth="10000.0" minWidth="50.0" prefWidth="50.0" text="%stage.processList.table.column.identifier">-->
                     <!--<cellValueFactory>-->

@@ -2,7 +2,7 @@ package name.wind.tools.eq2.lp;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import name.wind.application.cdi.event.PropagateResources;
+import name.wind.application.cdi.event.ResourceBundleLoading;
 import name.wind.application.cdi.fx.event.FXMLResourceOpen;
 import name.wind.common.util.KnownSystemProperties;
 import org.jboss.weld.environment.se.Weld;
@@ -29,7 +29,7 @@ public class Launcher extends Application implements KnownSystemProperties, I18n
     @Override public void start(Stage primaryStage) throws Exception {
         BeanManager beanManager = weldContainer.getBeanManager();
         beanManager.fireEvent(
-            new PropagateResources(bundle));
+            new ResourceBundleLoading(bundle));
         beanManager.fireEvent(
             new FXMLResourceOpen(primaryStage, FXMLResources.FXML__EVENT_BROWSER_STAGE));
     }
