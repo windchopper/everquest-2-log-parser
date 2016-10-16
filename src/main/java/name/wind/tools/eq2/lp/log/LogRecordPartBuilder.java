@@ -4,4 +4,6 @@ public interface LogRecordPartBuilder<E extends LogRecordPart> {
 
     String regularExpression();
 
+
+
 }
