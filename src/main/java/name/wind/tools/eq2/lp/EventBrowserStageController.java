@@ -10,6 +10,7 @@ import name.wind.application.cdi.fx.StageController;
 import name.wind.application.cdi.fx.annotation.FXMLResource;
 import name.wind.application.cdi.fx.event.FXMLResourceOpen;
 import name.wind.common.util.Builder;
+import name.wind.common.util.KnownSystemProperties;
 import name.wind.common.util.Value;
 import name.wind.tools.eq2.lp.log.LogRecord;
 
@@ -21,7 +22,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @ApplicationScoped @FXMLResource(FXMLResources.FXML__EVENT_BROWSER_STAGE) public class EventBrowserStageController
-    extends StageController implements I18nSupport, PreferencesSupport {
+    extends StageController implements I18nSupport, PreferencesSupport, KnownSystemProperties {
 
     @Inject private Event<FXMLResourceOpen> fxmlResourceOpenEvent;
     @FXML private TreeTableView<LogRecord> eventTreeTableView;
@@ -29,7 +30,8 @@ import java.util.function.Supplier;
     @FXML protected void openFile(ActionEvent event) {
         Value.of(
             Builder.direct(FileChooser::new)
-                .set(target -> target::setInitialDirectory, openFileInitialDirectoryPreferencesEntry.get()))
+                .set(target -> target::setInitialDirectory, Value.of(openFileInitialDirectoryPreferencesEntry)
+                    .orElse(PROPERTY__USER_HOME.value())))
             .map(fileChooser -> fileChooser.showOpenMultipleDialog(stage))
             .ifPresent(files -> files.stream()
                 .findAny().ifPresent(file -> openFileInitialDirectoryPreferencesEntry.accept(

@@ -38,14 +38,11 @@ import java.util.Map;
 
     }
 
-    @Inject @PartBuilder Instance<LogRecordPartBuilder<?>> logEventBuilders;
     @FXML private ListView<BuilderReference> logEventBuilderListView;
 
     @Override protected void start(Stage stage, String fxmlResource, Map<String, ?> parameters) {
         super.start(stage, fxmlResource, parameters);
         logEventBuilderListView.setCellFactory(CheckBoxListCell.forListView(BuilderReference::selectedProperty));
-        logEventBuilders.forEach(builder -> logEventBuilderListView.getItems().add(
-            new BuilderReference(builder)));
     }
 
 }

@@ -19,4 +19,11 @@ public interface PreferencesSupport {
         PREFERENCES_ENTRY_NAME__OPEN_FILE_INITIAL_DIRECTORY,
         PreferencesEntryType.fileType);
 
+    String PREFERENCES_ENTRY_NAME__LOG_REGEXP = "logRegexp";
+
+    PreferencesEntry<String> logRegexp = new DefaultPreferencesEntry<>(
+        preferencesStorage,
+        PREFERENCES_ENTRY_NAME__LOG_REGEXP,
+        PreferencesEntryType.stringType);
+
 }

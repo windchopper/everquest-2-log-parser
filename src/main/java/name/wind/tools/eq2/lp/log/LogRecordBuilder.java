@@ -1,87 +1,118 @@
 package name.wind.tools.eq2.lp.log;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveTask;
-import java.util.concurrent.atomic.AtomicReference;
+import name.wind.common.util.Value;
+import name.wind.tools.eq2.lp.PreferencesSupport;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.Arrays.asList;
+public class LogRecordBuilder implements PreferencesSupport {
 
-public class LogRecordBuilder {
+    private static final String REGEXP__GROUP = "\\?<(?<groupName>\\w+)>";
+    private static final String REGEXP__LOG_RECORD = "(?sm)^\\((?<timestamp>\\d{10})\\)\\[.+\\]\\s(" +
+        "(\\QYou have entered\\E\\s(?<zone>.+)\\.)|" +
+        "(?<notParsed>.+)" +
+        ")\\z";
 
-    private final Map<String, Pattern> patternBuffer = new HashMap<>();
-    private final List<LogRecordPartBuilder<?>> builders;
+    private final Pattern groupPattern;
+    private final Pattern logRecordPattern;
 
-    private static class MatchTask extends RecursiveTask<Matcher> {
+    private final Set<String> logRecordPatternGroups = new HashSet<>();
 
-        private final String text;
+    public LogRecordBuilder() {
+        groupPattern = Pattern.compile(REGEXP__GROUP);
+        logRecordPattern = Pattern.compile(
+            Value.of(logRegexp)
+                .ifNotPresentSupply(() -> {
+                    logRegexp.accept(REGEXP__LOG_RECORD);
+                    return logRegexp.get();
+                })
+                .get());
 
-        public MatchTask(String text) {
-            this.text = text;
+        for (Matcher matcher = groupPattern.matcher(logRecordPattern.pattern()); matcher.find(); ) {
+            logRecordPatternGroups.add(matcher.group("groupName"));
         }
-
-        @Override protected Matcher compute() {
-            return null;
-        }
-
     }
 
-    public LogRecordBuilder(List<LogRecordPartBuilder<?>> builders) {
-        this.builders = builders;
-    }
+    public void read(BufferedReader bufferedReader) throws IOException {
+        Matcher logRecordMatcher = logRecordPattern.matcher("");
+        Matcher reserveLogRecordMatcher = logRecordPattern.matcher("");
 
-    public LogRecord build(ForkJoinPool pool, String logLine) {
-        class IntHolder {
-            int value;
+        String logRecordLine = bufferedReader.readLine();
+        Map<String, String> logRecordMatcherGroups = null;
+        List<String> logRecordLines = new ArrayList<>();
 
-            public IntHolder(int value) {
-                this.value = value;
+        long start = System.nanoTime();
+        long count = 0;
+
+        while (logRecordLine != null) {
+            logRecordLine = logRecordLine.trim();
+            String nextLogRecordLine = bufferedReader.readLine();
+            boolean nextLogRecordLineMatches = false;
+
+            if (logRecordLine.length() > 0) {
+                logRecordLines.add(logRecordLine);
+
+                if (nextLogRecordLine != null) {
+                    logRecordMatcher.reset(nextLogRecordLine);
+                    nextLogRecordLineMatches = logRecordMatcher.matches();
+                }
+
+                if (nextLogRecordLine == null || nextLogRecordLineMatches) {
+                    if (logRecordLines.size() > 1 || logRecordMatcherGroups == null) {
+                        if (logRecordMatcherGroups == null) {
+                            logRecordMatcherGroups = new HashMap<>(logRecordPatternGroups.size());
+                        } else {
+                            logRecordMatcherGroups.clear();
+                        }
+
+                        reserveLogRecordMatcher.reset(
+                            String.join("\n", logRecordLines));
+
+                        if (reserveLogRecordMatcher.matches()) {
+                            System.out.println(reserveLogRecordMatcher.group());
+
+                            for (String group : logRecordPatternGroups) {
+                                logRecordMatcherGroups.put(group, reserveLogRecordMatcher.group(group));
+                            }
+
+                            loadLogRecord(logRecordMatcherGroups);
+                        } else {
+                            throw new RuntimeException("oops");
+                        }
+                    } else if (logRecordLines.size() > 0) {
+                        loadLogRecord(logRecordMatcherGroups);
+                    }
+
+                    logRecordLines.clear();
+                }
             }
-        }
 
+            logRecordLine = nextLogRecordLine;
 
+            if (nextLogRecordLineMatches) {
+                logRecordMatcherGroups.clear();
 
-        for (IntHolder index = new IntHolder(0); index.value < logLine.length(); ) {
-
-
-            builders.parallelStream()
-                .filter(builder -> patternBuffer.computeIfAbsent(builder.regularExpression(), Pattern::compile).matcher(logLine).find(index.value))
-                .findFirst();
-
-
-            new RecursiveTask<Object>() {
-
-                @Override
-                protected Object compute() {
-                    return null;
+                for (String group : logRecordPatternGroups) {
+                    logRecordMatcherGroups.put(group, logRecordMatcher.group(group));
                 }
-            }.invoke();
+            }
 
+            count++;
         }
 
-        return null;
+        long total = System.nanoTime() - start;
+
+        System.out.println();
+        System.out.println("average logRecordLine: " + TimeUnit.NANOSECONDS.toMillis(total / count) + " ms");
+        System.out.println("total: " + TimeUnit.NANOSECONDS.toMillis(total) + " ms");
     }
 
-    public static void main(String... args) {
-        List<String> samples = asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-        Random random = new Random();
-
-        samples.parallelStream()
-            .filter(sample -> {
-                System.out.println(sample);
-                try {
-                    Thread.sleep(1000L);
-                } catch (InterruptedException ignored) {
-                }
-                return random.nextBoolean();
-            })
-            .findFirst()
-            .ifPresent(sample -> System.out.println("found: " + sample));
+    public void loadLogRecord(Map<String, String> logRecordMatcherGroups) {
     }
 
 }
