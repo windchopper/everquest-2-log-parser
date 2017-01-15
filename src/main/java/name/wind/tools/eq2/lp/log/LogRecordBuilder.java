@@ -1,7 +1,6 @@
 package name.wind.tools.eq2.lp.log;
 
-import name.wind.common.util.Value;
-import name.wind.tools.eq2.lp.PreferencesSupport;
+import name.wind.tools.eq2.lp.Globals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogRecordBuilder implements PreferencesSupport {
+public class LogRecordBuilder {
 
     private static final String REGEXP__GROUP = "\\?<(?<groupName>\\w+)>";
     private static final String REGEXP__LOG_RECORD = "(?sm)^\\((?<timestamp>\\d{10})\\)\\[.+\\]\\s(" +
@@ -26,10 +25,10 @@ public class LogRecordBuilder implements PreferencesSupport {
     public LogRecordBuilder() {
         groupPattern = Pattern.compile(REGEXP__GROUP);
         logRecordPattern = Pattern.compile(
-            Value.of(logRegexp)
-                .ifNotPresentSupply(() -> {
-                    logRegexp.accept(REGEXP__LOG_RECORD);
-                    return logRegexp.get();
+            Optional.of(Globals.Settings.logRegexp)
+                .orElseGet(() -> {
+                    Globals.Settings.logRegexp.accept(REGEXP__LOG_RECORD);
+                    return Globals.Settings.logRegexp;
                 })
                 .get());
 

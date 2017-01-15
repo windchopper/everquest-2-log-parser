@@ -9,8 +9,11 @@ import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
 import javax.enterprise.inject.spi.BeanManager;
+import java.util.ResourceBundle;
 
-public class Launcher extends Application implements KnownSystemProperties, I18nSupport {
+public class Launcher extends Application implements KnownSystemProperties {
+
+    private static final ResourceBundle bundle = ResourceBundle.getBundle("name.wind.tools.eq2.lp.i18n.messages");
 
     private Weld weld;
     private WeldContainer weldContainer;
@@ -31,7 +34,7 @@ public class Launcher extends Application implements KnownSystemProperties, I18n
         beanManager.fireEvent(
             new ResourceBundleLoading(bundle));
         beanManager.fireEvent(
-            new FXMLResourceOpen(primaryStage, FXMLResources.FXML__EVENT_BROWSER_STAGE));
+            new FXMLResourceOpen(primaryStage, Globals.FXMLResources.FXML__EVENT_BROWSER_STAGE));
     }
 
     /*

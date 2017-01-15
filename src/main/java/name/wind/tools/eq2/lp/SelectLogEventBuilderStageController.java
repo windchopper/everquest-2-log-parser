@@ -9,15 +9,13 @@ import javafx.stage.Stage;
 import name.wind.application.cdi.fx.StageController;
 import name.wind.application.cdi.fx.annotation.FXMLResource;
 import name.wind.tools.eq2.lp.log.LogRecordPartBuilder;
-import name.wind.tools.eq2.lp.log.PartBuilder;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-@ApplicationScoped @FXMLResource(FXMLResources.FXML__SELECT_LOG_EVENT_BUILDER_STAGE) public class SelectLogEventBuilderStageController
-    extends StageController implements I18nSupport, PreferencesSupport {
+@ApplicationScoped @FXMLResource(Globals.FXMLResources.FXML__SELECT_LOG_EVENT_BUILDER_STAGE) public class SelectLogEventBuilderStageController
+    extends StageController {
 
     private static class BuilderReference {
 
