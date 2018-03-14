@@ -1,17 +1,17 @@
-package name.wind.tools.eq2.lp;
+package com.github.windchopper.tools.eq2.lp;
 
+import com.github.windchopper.common.fx.application.fx.StageController;
+import com.github.windchopper.common.fx.application.fx.annotation.FXMLResource;
+import com.github.windchopper.common.fx.application.fx.event.FXMLResourceOpen;
+import com.github.windchopper.common.util.KnownSystemProperties;
+import com.github.windchopper.common.util.Pipeliner;
+import com.github.windchopper.tools.eq2.lp.log.LogRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import name.wind.application.cdi.fx.StageController;
-import name.wind.application.cdi.fx.annotation.FXMLResource;
-import name.wind.application.cdi.fx.event.FXMLResourceOpen;
-import name.wind.common.util.KnownSystemProperties;
-import name.wind.common.util.Pipeliner;
-import name.wind.tools.eq2.lp.log.LogRecord;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;

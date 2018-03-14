@@ -1,6 +1,6 @@
-package name.wind.tools.eq2.lp;
+package com.github.windchopper.tools.eq2.lp;
 
-import name.wind.tools.eq2.lp.log.LogRecordBuilder;
+import com.github.windchopper.tools.eq2.lp.log.LogRecordBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

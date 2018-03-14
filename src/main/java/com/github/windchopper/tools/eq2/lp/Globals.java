@@ -1,10 +1,10 @@
-package name.wind.tools.eq2.lp;
+package com.github.windchopper.tools.eq2.lp;
 
-import name.wind.common.preferences.PlatformPreferencesStorage;
-import name.wind.common.preferences.PreferencesEntry;
-import name.wind.common.preferences.PreferencesEntryType;
-import name.wind.common.preferences.PreferencesStorage;
-import name.wind.common.preferences.types.FlatType;
+import com.github.windchopper.common.preferences.PlatformPreferencesStorage;
+import com.github.windchopper.common.preferences.PreferencesEntry;
+import com.github.windchopper.common.preferences.PreferencesEntryType;
+import com.github.windchopper.common.preferences.PreferencesStorage;
+import com.github.windchopper.common.preferences.types.FlatType;
 
 import java.io.File;
 import java.time.Duration;
@@ -41,8 +41,8 @@ public class Globals {
 
     public static class FXMLResources {
 
-        public static final String FXML__EVENT_BROWSER_STAGE = "/name/wind/tools/eq2/lp/eventBrowserStage.fxml";
-        public static final String FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/name/wind/tools/eq2/lp/selectLogEventBuilderStage.fxml";
+        public static final String FXML__EVENT_BROWSER_STAGE = "/com/github/windchopper/tools/eq2/lp/eventBrowserStage.fxml";
+        public static final String FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/com/github/windchopper/tools/eq2/lp/selectLogEventBuilderStage.fxml";
 
     }
 

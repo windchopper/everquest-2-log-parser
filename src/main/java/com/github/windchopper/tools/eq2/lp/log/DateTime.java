@@ -1,4 +1,4 @@
-package name.wind.tools.eq2.lp.log;
+package com.github.windchopper.tools.eq2.lp.log;
 
 import java.time.LocalDateTime;
 
