@@ -1,4 +1,4 @@
-package com.github.windchopper.tools.eq2.lp;
+package com.github.windchopper.tools.eq.lp;
 
 import com.github.windchopper.common.preferences.PlatformPreferencesStorage;
 import com.github.windchopper.common.preferences.PreferencesEntry;
@@ -41,8 +41,8 @@ public class Globals {
 
     public static class FXMLResources {
 
-        public static final String FXML__EVENT_BROWSER_STAGE = "/com/github/windchopper/tools/eq2/lp/eventBrowserStage.fxml";
-        public static final String FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/com/github/windchopper/tools/eq2/lp/selectLogEventBuilderStage.fxml";
+        public static final String FXML__EVENT_BROWSER_STAGE = "/com/github/windchopper/tools/eq/lp/eventBrowserStage.fxml";
+        public static final String FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/com/github/windchopper/tools/eq/lp/selectLogEventBuilderStage.fxml";
 
     }
 

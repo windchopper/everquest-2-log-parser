@@ -1,12 +1,11 @@
-package com.github.windchopper.tools.eq2.lp;
+package com.github.windchopper.tools.eq.lp;
 
-import com.github.windchopper.tools.eq2.lp.log.LogRecordBuilder;
+import com.github.windchopper.tools.eq.lp.log.LogRecordBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.format.DateTimeFormatterBuilder;
 
 public class Test {
 

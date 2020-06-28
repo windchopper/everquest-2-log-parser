@@ -1,17 +1,13 @@
-package com.github.windchopper.tools.eq2.lp;
+package com.github.windchopper.tools.eq.lp;
 
-import com.github.windchopper.common.fx.application.event.ResourceBundleLoading;
-import com.github.windchopper.common.fx.application.fx.event.FXMLResourceOpen;
-import com.github.windchopper.common.util.KnownSystemProperties;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
-import javax.enterprise.inject.spi.BeanManager;
 import java.util.ResourceBundle;
 
-public class Launcher extends Application implements KnownSystemProperties {
+public class Launcher extends Application {
 
     private static final ResourceBundle bundle = ResourceBundle.getBundle("com.github.windchopper.tools.eq2.lp.i18n.messages");
 

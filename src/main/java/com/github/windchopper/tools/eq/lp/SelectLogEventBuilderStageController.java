@@ -1,8 +1,6 @@
-package com.github.windchopper.tools.eq2.lp;
+package com.github.windchopper.tools.eq.lp;
 
-import com.github.windchopper.common.fx.application.fx.StageController;
-import com.github.windchopper.common.fx.application.fx.annotation.FXMLResource;
-import com.github.windchopper.tools.eq2.lp.log.LogRecordPartBuilder;
+import com.github.windchopper.tools.eq.lp.log.LogRecordPartBuilder;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -10,7 +8,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
 
 @ApplicationScoped @FXMLResource(Globals.FXMLResources.FXML__SELECT_LOG_EVENT_BUILDER_STAGE) public class SelectLogEventBuilderStageController

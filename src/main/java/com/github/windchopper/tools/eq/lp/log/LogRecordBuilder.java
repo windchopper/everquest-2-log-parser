@@ -1,14 +1,12 @@
-package com.github.windchopper.tools.eq2.lp.log;
+package com.github.windchopper.tools.eq.lp.log;
 
-import com.github.windchopper.tools.eq2.lp.Globals;
+import com.github.windchopper.tools.eq.lp.Globals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Optional;
-import java.util.Stack;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

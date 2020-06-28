@@ -4,14 +4,40 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>name.wind.tools</groupId>
-    <artifactId>everuqest-2-log-parser</artifactId>
+    <artifactId>everquest-log-parser</artifactId>
     <version>1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <javafx.version>14.0.1</javafx.version>
+        <common.version>1.1</common.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.github.windchopper</groupId>
+            <artifactId>common-fx</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.windchopper</groupId>
+            <artifactId>common-fx-cdi</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.windchopper</groupId>
+            <artifactId>common-io</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.windchopper</groupId>
+            <artifactId>common-preferences</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.windchopper</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

@@ -1,8 +1,6 @@
-package com.github.windchopper.tools.eq2.lp.log;
+package com.github.windchopper.tools.eq.lp.log;
 
-import com.github.windchopper.tools.eq2.lp.Globals;
-
-import javax.enterprise.context.ApplicationScoped;
+import com.github.windchopper.tools.eq.lp.Globals;
 
 @ApplicationScoped @PartBuilder public class ZoneEnterBuilder implements LogRecordPartBuilder<ZoneEnter> {
 
