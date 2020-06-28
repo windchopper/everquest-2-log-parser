@@ -1,4 +1,3 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-public interface LogRecordPart {
-}
+interface LogRecordPart 

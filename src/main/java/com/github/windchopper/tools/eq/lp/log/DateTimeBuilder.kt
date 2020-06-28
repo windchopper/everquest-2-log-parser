@@ -1,15 +1,16 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-import com.github.windchopper.tools.eq.lp.Globals;
+import com.github.windchopper.tools.eq.lp.Application
+import jakarta.enterprise.context.ApplicationScoped
 
-@ApplicationScoped @PartBuilder public class DateTimeBuilder implements LogRecordPartBuilder<DateTime> {
+@ApplicationScoped @PartBuilder class DateTimeBuilder: LogRecordPartBuilder<DateTime?> {
 
-    @Override public String regularExpression() {
-        return "^\\((?<dateTimeSeconds>\\d{10})\\)\\[(?<dateTimeFormattedText>)\\]";
+    override fun regularExpression(): String {
+        return "^\\((?<dateTimeSeconds>\\d{10})\\)\\[(?<dateTimeFormattedText>)\\]"
     }
 
-    @Override public String toString() {
-        return Globals.I18n.bundle.getString("name.wind.tools.eq2.lp.logRecordPartBuilder.dateTime.description");
+    override fun toString(): String {
+        return Application.messages["name.wind.tools.eq2.lp.logRecordPartBuilder.dateTime.description"]!!
     }
 
 }

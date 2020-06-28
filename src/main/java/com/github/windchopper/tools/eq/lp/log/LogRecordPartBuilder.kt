@@ -1,7 +1,5 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-public interface LogRecordPartBuilder<E extends LogRecordPart> {
-
-    String regularExpression();
-
+interface LogRecordPartBuilder<E: LogRecordPart?> {
+    fun regularExpression(): String?
 }

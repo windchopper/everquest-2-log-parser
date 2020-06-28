@@ -1,42 +1,35 @@
-package com.github.windchopper.tools.eq.lp;
+package com.github.windchopper.tools.eq.lp
 
-import com.github.windchopper.tools.eq.lp.log.LogRecordPartBuilder;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.cell.CheckBoxListCell;
-import javafx.stage.Stage;
+import com.github.windchopper.common.fx.cdi.form.Form
+import com.github.windchopper.common.fx.cdi.form.StageFormController
+import com.github.windchopper.tools.eq.lp.log.LogRecordPartBuilder
+import jakarta.enterprise.context.ApplicationScoped
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.SimpleBooleanProperty
+import javafx.fxml.FXML
+import javafx.scene.Parent
+import javafx.scene.control.ListView
+import javafx.scene.control.cell.CheckBoxListCell
 
-import java.util.Map;
-
-@ApplicationScoped @FXMLResource(Globals.FXMLResources.FXML__SELECT_LOG_EVENT_BUILDER_STAGE) public class SelectLogEventBuilderStageController
-    extends StageController {
-
-    private static class BuilderReference {
-
-        private final LogRecordPartBuilder<?> builder;
-        private final BooleanProperty selectedProperty = new SimpleBooleanProperty(this, "selected", true);
-
-        public BuilderReference(LogRecordPartBuilder<?> builder) {
-            this.builder = builder;
+@ApplicationScoped
+@Form(Application.FXML__SELECT_LOG_EVENT_BUILDER_STAGE)
+class SelectLogEventBuilderStageController: StageFormController() {
+    private class BuilderReference(private val builder: LogRecordPartBuilder<*>) {
+        private val selectedProperty: BooleanProperty = SimpleBooleanProperty(this, "selected", true)
+        fun selectedProperty(): BooleanProperty {
+            return selectedProperty
         }
 
-        public BooleanProperty selectedProperty() {
-            return selectedProperty;
-        }
-
-        @Override public String toString() {
-            return builder.toString();
+        override fun toString(): String {
+            return builder.toString()
         }
 
     }
 
-    @FXML private ListView<BuilderReference> logEventBuilderListView;
-
-    @Override protected void start(Stage stage, String fxmlResource, Map<String, ?> parameters) {
-        super.start(stage, fxmlResource, parameters);
-        logEventBuilderListView.setCellFactory(CheckBoxListCell.forListView(BuilderReference::selectedProperty));
+    @FXML
+    private val logEventBuilderListView: ListView<BuilderReference>? = null
+    override fun afterLoad(form: Parent, parameters: Map<String?, *>?, formNamespace: Map<String?, *>?) {
+        super.afterLoad(form, parameters, formNamespace)
+        logEventBuilderListView!!.cellFactory = CheckBoxListCell.forListView { obj: BuilderReference -> obj.selectedProperty() }
     }
-
 }

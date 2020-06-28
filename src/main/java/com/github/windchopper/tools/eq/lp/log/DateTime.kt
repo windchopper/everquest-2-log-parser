@@ -1,17 +1,5 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime
 
-public class DateTime implements LogRecordPart {
-
-    private final LocalDateTime dateTime;
-
-    public DateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public LocalDateTime dateTime() {
-        return dateTime;
-    }
-
-}
+class DateTime(val dateTime: LocalDateTime): LogRecordPart

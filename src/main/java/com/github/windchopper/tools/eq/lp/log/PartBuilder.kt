@@ -1,11 +1,7 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import jakarta.inject.Qualifier
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-@Qualifier
-@Retention(RUNTIME)
-public @interface PartBuilder {
-}
+@Qualifier @Retention(RetentionPolicy.RUNTIME) annotation class PartBuilder

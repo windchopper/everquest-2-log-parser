@@ -1,15 +1,16 @@
-package com.github.windchopper.tools.eq.lp.log;
+package com.github.windchopper.tools.eq.lp.log
 
-import com.github.windchopper.tools.eq.lp.Globals;
+import com.github.windchopper.tools.eq.lp.Application
+import jakarta.enterprise.context.ApplicationScoped
 
-@ApplicationScoped @PartBuilder public class ZoneEnterBuilder implements LogRecordPartBuilder<ZoneEnter> {
+@ApplicationScoped @PartBuilder class ZoneEnterBuilder: LogRecordPartBuilder<ZoneEnter?> {
 
-    @Override public String regularExpression() {
-        return "\\QYou have entered\\E\\s(?<zone>.*)\\.$";
+    override fun regularExpression(): String? {
+        return "\\QYou have entered\\E\\s(?<zone>.*)\\.$"
     }
 
-    @Override public String toString() {
-        return Globals.I18n.bundle.getString("name.wind.tools.eq2.lp.logRecordPartBuilder.zoneEnter.description");
+    override fun toString(): String {
+        return Application.messages["name.wind.tools.eq2.lp.logRecordPartBuilder.zoneEnter.description"]!!
     }
 
 }
