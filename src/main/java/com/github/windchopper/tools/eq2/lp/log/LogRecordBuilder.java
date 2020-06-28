@@ -4,26 +4,24 @@ import com.github.windchopper.tools.eq2.lp.Globals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.Stack;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LogRecordBuilder {
 
-    private static final String REGEXP__GROUP = "\\?<(?<groupName>\\w+)>";
     private static final String REGEXP__LOG_RECORD = "(?sm)^\\((?<timestamp>\\d{10})\\)\\[.+\\]\\s(" +
         "(\\QYou have entered\\E\\s(?<zone>.+)\\.)|" +
         "(?<notParsed>.+)" +
         ")\\z";
 
-    private final Pattern groupPattern;
     private final Pattern logRecordPattern;
 
-    private final Set<String> logRecordPatternGroups = new HashSet<>();
-
     public LogRecordBuilder() {
-        groupPattern = Pattern.compile(REGEXP__GROUP);
         logRecordPattern = Pattern.compile(
             Optional.of(Globals.Settings.logRegexp)
                 .orElseGet(() -> {
@@ -31,87 +29,33 @@ public class LogRecordBuilder {
                     return Globals.Settings.logRegexp;
                 })
                 .get());
-
-        for (Matcher matcher = groupPattern.matcher(logRecordPattern.pattern()); matcher.find(); ) {
-            logRecordPatternGroups.add(matcher.group("groupName"));
-        }
     }
 
-    public void read(BufferedReader bufferedReader) throws IOException {
+    public void read(BufferedReader reader) throws IOException {
         Matcher logRecordMatcher = logRecordPattern.matcher("");
-        Matcher reserveLogRecordMatcher = logRecordPattern.matcher("");
 
-        String logRecordLine = bufferedReader.readLine();
-        Map<String, String> logRecordMatcherGroups = null;
-        List<String> logRecordLines = new ArrayList<>();
+        String currentLine;
 
-        long start = System.nanoTime();
-        long count = 0;
+        Deque<String> committedResults = new LinkedList<>();
+        String previousResult = null;
 
-        while (logRecordLine != null) {
-            logRecordLine = logRecordLine.trim();
-            String nextLogRecordLine = bufferedReader.readLine();
-            boolean nextLogRecordLineMatches = false;
-
-            if (logRecordLine.length() > 0) {
-                logRecordLines.add(logRecordLine);
-
-                if (nextLogRecordLine != null) {
-                    logRecordMatcher.reset(nextLogRecordLine);
-                    nextLogRecordLineMatches = logRecordMatcher.matches();
-                }
-
-                if (nextLogRecordLine == null || nextLogRecordLineMatches) {
-                    if (logRecordLines.size() > 1 || logRecordMatcherGroups == null) {
-                        if (logRecordMatcherGroups == null) {
-                            logRecordMatcherGroups = new HashMap<>(logRecordPatternGroups.size());
-                        } else {
-                            logRecordMatcherGroups.clear();
-                        }
-
-                        reserveLogRecordMatcher.reset(
-                            String.join("\n", logRecordLines));
-
-                        if (reserveLogRecordMatcher.matches()) {
-                            System.out.println(reserveLogRecordMatcher.group());
-
-                            for (String group : logRecordPatternGroups) {
-                                logRecordMatcherGroups.put(group, reserveLogRecordMatcher.group(group));
-                            }
-
-                            loadLogRecord(logRecordMatcherGroups);
-                        } else {
-                            throw new RuntimeException("oops");
-                        }
-                    } else if (logRecordLines.size() > 0) {
-                        loadLogRecord(logRecordMatcherGroups);
-                    }
-
-                    logRecordLines.clear();
-                }
+        while ((currentLine = reader.readLine()) != null) {
+            if (currentLine.isEmpty()) {
+                continue;
             }
 
-            logRecordLine = nextLogRecordLine;
+            logRecordMatcher.reset(currentLine);
 
-            if (nextLogRecordLineMatches) {
-                logRecordMatcherGroups.clear();
-
-                for (String group : logRecordPatternGroups) {
-                    logRecordMatcherGroups.put(group, logRecordMatcher.group(group));
+            if (logRecordMatcher.matches()) {
+                if (previousResult != null) {
+                    committedResults.addLast(currentLine);
                 }
-            }
 
-            count++;
+                previousResult = currentLine;
+            } else {
+                previousResult = previousResult + "\n" + currentLine;
+            }
         }
-
-        long total = System.nanoTime() - start;
-
-        System.out.println();
-        System.out.println("average logRecordLine: " + TimeUnit.NANOSECONDS.toMillis(total / count) + " ms");
-        System.out.println("total: " + TimeUnit.NANOSECONDS.toMillis(total) + " ms");
-    }
-
-    public void loadLogRecord(Map<String, String> logRecordMatcherGroups) {
     }
 
 }
