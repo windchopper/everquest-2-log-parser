@@ -1,8 +1,10 @@
 module windchopper.tools.everquest.log.parser {
 
-    opens com.github.windchopper.tools.eq.lp;
-    opens com.github.windchopper.tools.eq.lp.i18n;
-    opens com.github.windchopper.tools.eq.lp.log;
+    opens com.github.windchopper.tools.everquest.log.parser;
+    opens com.github.windchopper.tools.everquest.log.parser.i18n;
+    opens com.github.windchopper.tools.everquest.log.parser.log;
+    opens com.github.windchopper.tools.everquest.log.parser.misc;
+    opens com.github.windchopper.tools.everquest.log.parser.ui;
 
     requires kotlin.stdlib;
     requires kotlin.stdlib.jdk8;

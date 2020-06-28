@@ -1,4 +1,4 @@
-package com.github.windchopper.tools.eq.lp
+package com.github.windchopper.tools.everquest.log.parser
 
 import com.github.windchopper.common.fx.cdi.ResourceBundleLoad
 import com.github.windchopper.common.fx.cdi.form.StageFormLoad
@@ -22,17 +22,17 @@ class Application: javafx.application.Application() {
 
     companion object {
 
-        private val resourceBundle = ResourceBundle.getBundle("com.github.windchopper.tools.eq.lp.i18n.messages")
+        private val resourceBundle = ResourceBundle.getBundle("com.github.windchopper.tools.everquest.log.parser.i18n.messages")
 
         val messages = resourceBundle.keySet()
             .map { it to resourceBundle.getString(it) }
             .toMap()
 
         private val defaultBufferLifetime = Duration.ofMinutes(1)
-        private val preferencesStorage: PreferencesStorage = PlatformPreferencesStorage(Preferences.userRoot().node("com/github/windchopper/tools/eq/lp"))
+        private val preferencesStorage: PreferencesStorage = PlatformPreferencesStorage(Preferences.userRoot().node("com/github/windchopper/tools/everquest/log/parser"))
 
-        const val FXML__EVENT_BROWSER_STAGE = "/com/github/windchopper/tools/eq/lp/eventBrowserStage.fxml"
-        const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/com/github/windchopper/tools/eq/lp/selectLogEventBuilderStage.fxml"
+        const val FXML__EVENT_BROWSER_STAGE = "/com/github/windchopper/tools/everquest/log/parser/eventBrowserStage.fxml"
+        const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "/com/github/windchopper/tools/everquest/log/parser/selectLogEventBuilderStage.fxml"
 
         val openFileInitialDirectory = PreferencesEntry<File>(preferencesStorage, "openFileInitialDirectory", FlatType(Function { File(it) }, Function { it.absolutePath }), defaultBufferLifetime)
         val logRegexp = PreferencesEntry<Pattern>(preferencesStorage, "logRegexp", FlatType(Function { Pattern.compile(it) }, Function { it.pattern() }), defaultBufferLifetime)
@@ -47,10 +47,6 @@ class Application: javafx.application.Application() {
         weldContainer = weld.initialize()
     }
 
-    override fun stop() {
-        weld.shutdown()
-    }
-
     override fun start(primaryStage: Stage) {
         with (weldContainer.beanManager) {
             fireEvent(ResourceBundleLoad(resourceBundle))
@@ -58,6 +54,10 @@ class Application: javafx.application.Application() {
                 ClassPathResource(FXML__EVENT_BROWSER_STAGE),
                 Supplier { primaryStage }))
         }
+    }
+
+    override fun stop() {
+        weld.shutdown()
     }
 
 }

@@ -1,11 +1,12 @@
 @file:Suppress("NestedLambdaShadowedImplicitParameter")
 
-package com.github.windchopper.tools.eq.lp
+package com.github.windchopper.tools.everquest.log.parser.ui
 
 import com.github.windchopper.common.fx.cdi.form.Form
 import com.github.windchopper.common.fx.cdi.form.StageFormController
 import com.github.windchopper.common.fx.cdi.form.StageFormLoad
 import com.github.windchopper.common.util.ClassPathResource
+import com.github.windchopper.tools.everquest.log.parser.Application
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.event.Event
 import jakarta.inject.Inject

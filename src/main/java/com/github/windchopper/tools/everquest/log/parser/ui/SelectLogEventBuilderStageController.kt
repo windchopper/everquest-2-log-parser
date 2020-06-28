@@ -1,8 +1,8 @@
-package com.github.windchopper.tools.eq.lp
+package com.github.windchopper.tools.everquest.log.parser.ui
 
 import com.github.windchopper.common.fx.cdi.form.Form
 import com.github.windchopper.common.fx.cdi.form.StageFormController
-import com.github.windchopper.tools.eq.lp.log.LogRecordPartBuilder
+import com.github.windchopper.tools.everquest.log.parser.Application
 import jakarta.enterprise.context.ApplicationScoped
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
