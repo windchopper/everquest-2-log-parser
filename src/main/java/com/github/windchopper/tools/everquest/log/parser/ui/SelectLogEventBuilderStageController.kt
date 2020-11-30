@@ -13,26 +13,26 @@ import javafx.scene.control.cell.CheckBoxListCell
 
 @ApplicationScoped @Form(Application.FXML__SELECT_LOG_EVENT_BUILDER_STAGE) class SelectLogEventBuilderStageController: StageFormController() {
 
-    private class BuilderReference(private val builder: LogRecordPartBuilder<*>) {
+//    private class BuilderReference(private val builder: LogRecordPartBuilder<*>) {
+//
+//        private val selectedProperty: BooleanProperty = SimpleBooleanProperty(this, "selected", true)
+//
+//        fun selectedProperty(): BooleanProperty {
+//            return selectedProperty
+//        }
+//
+//        override fun toString(): String {
+//            return builder.toString()
+//        }
+//
+//    }
 
-        private val selectedProperty: BooleanProperty = SimpleBooleanProperty(this, "selected", true)
-
-        fun selectedProperty(): BooleanProperty {
-            return selectedProperty
-        }
-
-        override fun toString(): String {
-            return builder.toString()
-        }
-
-    }
-
-    @FXML
-    private val logEventBuilderListView: ListView<BuilderReference>? = null
+//    @FXML
+//    private val logEventBuilderListView: ListView<BuilderReference>? = null
 
     override fun afterLoad(form: Parent, parameters: Map<String, *>, formNamespace: Map<String, *>) {
         super.afterLoad(form, parameters, formNamespace)
-        logEventBuilderListView!!.cellFactory = CheckBoxListCell.forListView { obj: BuilderReference -> obj.selectedProperty() }
+//        logEventBuilderListView!!.cellFactory = CheckBoxListCell.forListView { obj: BuilderReference -> obj.selectedProperty() }
     }
 
 }
