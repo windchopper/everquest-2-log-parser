@@ -38,8 +38,8 @@ class Application: javafx.application.Application() {
             Preferences.userRoot().node("com/github/windchopper/tools/everquest/log/parser"))
 
         private val preferencesStorage = CompositePreferencesStorage(listOf(
-            Mediator(initialPreferencesStorage, 1, 0, false),
-            Mediator(realPreferencesStorage, 2, 1, true)))
+            Mediator(initialPreferencesStorage, 2, 0, false),
+            Mediator(realPreferencesStorage, 1, 1, true)))
 
         const val FXML__EVENT_BROWSER_STAGE = "com/github/windchopper/tools/everquest/log/parser/eventBrowserStage.fxml"
         const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "com/github/windchopper/tools/everquest/log/parser/selectLogEventBuilderStage.fxml"
