@@ -2,9 +2,8 @@ package com.github.windchopper.tools.everquest.log.parser
 
 import com.github.windchopper.common.fx.cdi.ResourceBundleLoad
 import com.github.windchopper.common.fx.cdi.form.StageFormLoad
-import com.github.windchopper.common.preferences.PlatformPreferencesStorage
-import com.github.windchopper.common.preferences.PreferencesEntry
-import com.github.windchopper.common.preferences.PreferencesStorage
+import com.github.windchopper.common.preferences.*
+import com.github.windchopper.common.preferences.CompositePreferencesStorage.Mediator
 import com.github.windchopper.common.preferences.types.FlatType
 import com.github.windchopper.common.util.ClassPathResource
 import javafx.stage.Stage
@@ -15,6 +14,7 @@ import java.time.Duration
 import java.util.*
 import java.util.prefs.Preferences
 import java.util.regex.Pattern
+import javax.json.Json
 
 class Application: javafx.application.Application() {
 
@@ -27,7 +27,19 @@ class Application: javafx.application.Application() {
             .toMap()
 
         private val defaultBufferLifetime = Duration.ofMinutes(1)
-        private val preferencesStorage: PreferencesStorage = PlatformPreferencesStorage(Preferences.userRoot().node("com/github/windchopper/tools/everquest/log/parser"))
+
+        private val initialPreferencesStorage = JsonPreferencesStorage(Json.createReader(
+            ClassPathResource("com/github/windchopper/tools/everquest/log/parser/initialPreferences.json").stream())
+                .use { reader ->
+                    reader.readObject()
+                })
+
+        private val realPreferencesStorage = PlatformPreferencesStorage(
+            Preferences.userRoot().node("com/github/windchopper/tools/everquest/log/parser"))
+
+        private val preferencesStorage = CompositePreferencesStorage(listOf(
+            Mediator(initialPreferencesStorage, 1, 0, false),
+            Mediator(realPreferencesStorage, 2, 1, true)))
 
         const val FXML__EVENT_BROWSER_STAGE = "com/github/windchopper/tools/everquest/log/parser/eventBrowserStage.fxml"
         const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "com/github/windchopper/tools/everquest/log/parser/selectLogEventBuilderStage.fxml"

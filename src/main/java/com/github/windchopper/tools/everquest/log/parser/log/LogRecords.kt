@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 abstract class AnyRecord(val dateTime: LocalDateTime)
 
-class UnknownRecord(dateTime: LocalDateTime, val text: String): AnyRecord(dateTime)
+class ZoneEnterRecord(dateTime: LocalDateTime): AnyRecord(dateTime) {
 
-class ZoneEnterRecord(dateTime: LocalDateTime): AnyRecord(dateTime)
+
+}

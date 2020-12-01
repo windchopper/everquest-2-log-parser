@@ -6,7 +6,8 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.github.windchopper.tools.everquest.log.parser.ui.EventBrowserStageController">
     <padding>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
     </padding>
@@ -19,7 +20,7 @@
         </ToolBar>
     </top>
     <center>
-        <TreeTableView fx:id="eventTreeTableView" prefHeight="200.0" prefWidth="200.0" showRoot="false" BorderPane.alignment="CENTER">
+        <TreeTableView fx:id="eventTreeTableView" showRoot="false" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
             </padding>

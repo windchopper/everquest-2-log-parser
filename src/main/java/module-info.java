@@ -10,6 +10,7 @@ module windchopper.tools.everquest.log.parser {
     requires kotlin.stdlib.jdk8;
 
     requires java.prefs;
+    requires java.json;
 
     requires javafx.controls;
     requires javafx.fxml;
