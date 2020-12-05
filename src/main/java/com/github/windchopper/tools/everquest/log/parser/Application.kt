@@ -49,8 +49,8 @@ class Application: javafx.application.Application() {
             PreferencesKey.MAIN to mainPreferencesStorage,
             PreferencesKey.INITIAL to initialPreferencesStorage))
                 .onLoad()
-                .tryStorage(PreferencesKey.INITIAL)
                 .tryStorage(PreferencesKey.MAIN)
+                .tryStorage(PreferencesKey.INITIAL)
                 .propagateToStorage(PreferencesKey.MAIN)
                 .enough()
                 .onSave()
