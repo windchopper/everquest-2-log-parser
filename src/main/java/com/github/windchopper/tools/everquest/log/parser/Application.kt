@@ -17,7 +17,6 @@ import java.io.File
 import java.time.Duration
 import java.util.*
 import java.util.prefs.Preferences
-import java.util.regex.Pattern
 import javax.json.Json
 
 class Application: javafx.application.Application() {
@@ -25,7 +24,7 @@ class Application: javafx.application.Application() {
     companion object {
 
         const val FXML__EVENT_BROWSER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/eventBrowserStage.fxml"
-        const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/selectLogEventBuilderStage.fxml"
+        const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/logFileInfoStage.fxml"
 
         private val resourceBundle = ResourceBundle.getBundle("com.github.windchopper.tools.everquest.log.parser.i18n.messages")
 

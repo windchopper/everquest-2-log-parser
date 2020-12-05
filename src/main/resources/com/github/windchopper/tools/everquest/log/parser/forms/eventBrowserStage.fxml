@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="400.0" prefWidth="600.0" prefHeight="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.github.windchopper.tools.everquest.log.parser.ui.EventBrowserStageController">
     <padding>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
@@ -16,7 +16,7 @@
             <padding>
                 <Insets bottom="4.0" top="4.0"/>
             </padding>
-            <Button text="%name.wind.tools.eq2.lp.openFile" onAction="#openFile"/>
+            <Button text="%eventBrowserStage.open" onAction="#openFile"/>
         </ToolBar>
     </top>
     <center>
