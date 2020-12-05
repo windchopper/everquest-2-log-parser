@@ -2,6 +2,7 @@
   "pattern": {
     "notSupported": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<text>.+)$",
     "zoneEnter": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] You have entered (?<zone>.+)\\.$",
-    "characterLoggedIn": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<relation>.+): (?<name>.+) has logged in\\.?$"
+    "characterLoggedIn": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<relation>.+): (?<character>.+) has logged in\\.?$",
+    "characterSkillApplied": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<character>.+)'s (?<skill>.+) (?<action>hits|heals|regenerates|refreshes|emboldens) (?<rest>.+)$"
   }
 }
