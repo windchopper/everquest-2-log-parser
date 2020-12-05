@@ -1,3 +1,7 @@
 {
-  "logRegexp": "bla bla bla"
+  "pattern": {
+    "notSupported": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<text>.+)$",
+    "zoneEnter": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] You have entered (?<zone>.+)\\.$",
+    "characterLoggedIn": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<relation>.+): (?<name>.+) has logged in\\.?$"
+  }
 }

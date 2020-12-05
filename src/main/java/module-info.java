@@ -7,7 +7,7 @@ module windchopper.tools.everquest.log.parser {
     opens com.github.windchopper.tools.everquest.log.parser.ui;
 
     requires kotlin.stdlib;
-    requires kotlin.stdlib.jdk8;
+    requires kotlin.reflect;
 
     requires java.prefs;
     requires java.json;
