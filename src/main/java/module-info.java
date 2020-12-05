@@ -1,6 +1,7 @@
 module windchopper.tools.everquest.log.parser {
 
     opens com.github.windchopper.tools.everquest.log.parser;
+    opens com.github.windchopper.tools.everquest.log.parser.forms;
     opens com.github.windchopper.tools.everquest.log.parser.i18n;
     opens com.github.windchopper.tools.everquest.log.parser.log;
     opens com.github.windchopper.tools.everquest.log.parser.misc;

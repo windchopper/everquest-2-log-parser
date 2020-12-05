@@ -9,8 +9,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>14</java.version>
-        <kotlin.version>1.4.20</kotlin.version>
-        <kotlin.ext.version>1.4.2</kotlin.ext.version>
+        <kotlin.version>1.4.10</kotlin.version>
+        <kotlin.ext.version>1.4.1</kotlin.ext.version>
         <javafx.version>15.0.1</javafx.version>
         <common.version>1.1</common.version>
     </properties>
@@ -92,7 +92,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -112,23 +112,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

@@ -32,10 +32,10 @@ import java.io.File
             stageFormLoadEvent.fire(StageFormLoad(
                 ClassPathResource(Application.FXML__SELECT_LOG_EVENT_BUILDER_STAGE),
                 mapOf("files" to it)) {
-                    Stage().also { stage ->
-                        stage.initOwner(stage)
-                        stage.initModality(Modality.APPLICATION_MODAL)
-                        stage.isResizable = false
+                    Stage().also { newStage ->
+                        newStage.initOwner(stage)
+                        newStage.initModality(Modality.APPLICATION_MODAL)
+                        newStage.isResizable = false
                     }
                 })
         }
