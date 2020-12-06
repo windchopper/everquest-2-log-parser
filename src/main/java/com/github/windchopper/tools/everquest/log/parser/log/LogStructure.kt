@@ -2,7 +2,7 @@
 
 package com.github.windchopper.tools.everquest.log.parser.log
 
-import com.github.windchopper.common.preferences.PreferencesEntry
+import com.github.windchopper.common.preferences.BufferedPreferencesEntry
 import com.github.windchopper.common.preferences.types.FlatType
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.defaultBufferLifetime
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesStorage
@@ -49,7 +49,7 @@ abstract class LogEventFactory {
 
 class NotSupportedEventFactory: LogEventFactory() {
 
-    private val notSupportedPattern = PreferencesEntry(patternPreferencesStorage, "notSupported", patternType, defaultBufferLifetime)
+    private val notSupportedPattern = BufferedPreferencesEntry(patternPreferencesStorage, "notSupported", patternType, defaultBufferLifetime)
 
     override fun extract(text: String): LogEvent? {
         return notSupportedPattern.load().matcher(text).takeIf(Matcher::matches)
@@ -63,7 +63,7 @@ class NotSupportedEventFactory: LogEventFactory() {
 
 class ZoneEnterEventFactory: LogEventFactory() {
 
-    private val zoneEnterPattern = PreferencesEntry(patternPreferencesStorage, "zoneEnter", patternType, defaultBufferLifetime)
+    private val zoneEnterPattern = BufferedPreferencesEntry(patternPreferencesStorage, "zoneEnter", patternType, defaultBufferLifetime)
 
     override fun extract(text: String): ZoneEnterEvent? {
         return zoneEnterPattern.load().matcher(text).takeIf(Matcher::matches)
@@ -77,7 +77,7 @@ class ZoneEnterEventFactory: LogEventFactory() {
 
 class CharacterLoggedInEventFactory: LogEventFactory() {
 
-    private val characterLoggedInPattern = PreferencesEntry(patternPreferencesStorage, "characterLoggedIn", patternType, defaultBufferLifetime)
+    private val characterLoggedInPattern = BufferedPreferencesEntry(patternPreferencesStorage, "characterLoggedIn", patternType, defaultBufferLifetime)
 
     override fun extract(text: String): CharacterLoggedInEvent? {
         return characterLoggedInPattern.load().matcher(text).takeIf(Matcher::matches)
@@ -92,7 +92,7 @@ class CharacterLoggedInEventFactory: LogEventFactory() {
 
 class CharacterSkillAppliedEventFactory: LogEventFactory() {
 
-    private val characterSkillAppliedPattern = PreferencesEntry(patternPreferencesStorage, "characterSkillApplied", patternType, defaultBufferLifetime)
+    private val characterSkillAppliedPattern = BufferedPreferencesEntry(patternPreferencesStorage, "characterSkillApplied", patternType, defaultBufferLifetime)
 
     override fun extract(text: String): CharacterSkillAppliedEvent? {
         return characterSkillAppliedPattern.load().matcher(text).takeIf(Matcher::matches)
@@ -109,7 +109,7 @@ class CharacterSkillAppliedEventFactory: LogEventFactory() {
 
 class CharacterSayEventFactory: LogEventFactory() {
 
-    private val characterSayPattern = PreferencesEntry(patternPreferencesStorage, "characterSay", patternType, defaultBufferLifetime)
+    private val characterSayPattern = BufferedPreferencesEntry(patternPreferencesStorage, "characterSay", patternType, defaultBufferLifetime)
 
     override fun extract(text: String): CharacterSayEvent? {
         return characterSayPattern.load().matcher(text).takeIf(Matcher::matches)

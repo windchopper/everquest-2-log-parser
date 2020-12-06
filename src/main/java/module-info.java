@@ -15,8 +15,9 @@ module windchopper.tools.everquest.log.parser {
     requires javafx.controls;
     requires javafx.fxml;
 
-    requires jakarta.inject.api;
-    requires jakarta.enterprise.cdi.api;
+    requires jakarta.annotation;
+    requires jakarta.inject;
+    requires jakarta.cdi;
 
     requires weld.se.core;
     requires weld.environment.common;

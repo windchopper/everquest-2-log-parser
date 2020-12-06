@@ -12,7 +12,6 @@
         <kotlin.version>1.4.10</kotlin.version>
         <kotlin.ext.version>1.4.1</kotlin.ext.version>
         <javafx.version>15.0.1</javafx.version>
-        <common.version>1.1</common.version>
     </properties>
     <dependencies>
         <dependency>
@@ -46,34 +45,29 @@
             <version>2.1.1.Final</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>3.0.0-M2</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>4.0.0.Beta5</version>
+            <version>4.0.0.CR1</version>
         </dependency>
         <dependency>
             <groupId>com.github.windchopper</groupId>
             <artifactId>common-fx-cdi</artifactId>
-            <version>${common.version}</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.windchopper</groupId>
             <artifactId>common-io</artifactId>
-            <version>${common.version}</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.windchopper</groupId>
             <artifactId>common-preferences</artifactId>
-            <version>${common.version}</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.windchopper</groupId>
             <artifactId>common-util</artifactId>
-            <version>${common.version}</version>
+            <version>1.1</version>
         </dependency>
     </dependencies>
     <build>
