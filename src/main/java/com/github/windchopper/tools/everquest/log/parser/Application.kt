@@ -25,7 +25,8 @@ class Application: javafx.application.Application() {
     companion object {
 
         const val FXML__EVENT_BROWSER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/eventBrowserStage.fxml"
-        const val FXML__SELECT_LOG_EVENT_BUILDER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/logFileInfoStage.fxml"
+        const val FXML__LOG_FILE_SELECTION_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/logFileSelectionStage.fxml"
+        const val FXML__PARSE_PROGRESS_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/parseProgressStage.fxml"
 
         private val resourceBundle = ResourceBundle.getBundle("com.github.windchopper.tools.everquest.log.parser.i18n.messages")
 

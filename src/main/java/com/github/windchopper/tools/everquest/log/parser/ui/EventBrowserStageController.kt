@@ -30,13 +30,13 @@ import java.io.File
         files?.let { nonEmptyFiles ->
             Application.openFileInitialDirectory.save(nonEmptyFiles.first().parentFile)
             stageFormLoadEvent.fire(StageFormLoad(
-                ClassPathResource(Application.FXML__SELECT_LOG_EVENT_BUILDER_STAGE),
+                ClassPathResource(Application.FXML__LOG_FILE_SELECTION_STAGE),
                 mapOf("files" to nonEmptyFiles)) {
                     Stage().also { newStage ->
                         newStage.initOwner(stage)
                         newStage.initModality(Modality.APPLICATION_MODAL)
                         newStage.isResizable = false
-                        newStage.title = Application.messages["logFileInfoStage.title"]
+                        newStage.title = Application.messages["logFileSelectionStage.title"]
                     }
                 })
         }

@@ -11,18 +11,18 @@ import javafx.scene.control.TableColumn
 import javafx.util.Callback
 import java.io.File
 
-class LogFileInfo(private val file: File, private var playerName: String) {
+class LogFile(private val file: File, private var playerName: String) {
 
     private val fileNameProperty = SimpleObjectProperty(file.name)
     private val playerNameProperty = SimpleStringProperty(playerName)
 
     companion object {
 
-        @JvmStatic fun tableCellFactory(): Callback<TableColumn<LogFileInfo, String>, TableCell<LogFileInfo, String>> {
+        @JvmStatic fun tableCellFactory(): Callback<TableColumn<LogFile, String>, TableCell<LogFile, String>> {
             return CellFactories.tableColumnCellFactory { cell, column, item, empty -> cell.setText(item) }
         }
 
-        @JvmStatic fun tableCellValueFactory(): Callback<TableColumn.CellDataFeatures<LogFileInfo, String>, ObservableValue<String>> {
+        @JvmStatic fun tableCellValueFactory(): Callback<TableColumn.CellDataFeatures<LogFile, String>, ObservableValue<String>> {
             return Callback { features ->
                 when (features.tableColumn.id) {
                     "fileNameColumn" -> features.value.fileNameProperty
