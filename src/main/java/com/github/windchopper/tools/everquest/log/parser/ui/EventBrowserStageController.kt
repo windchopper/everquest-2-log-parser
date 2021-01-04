@@ -23,7 +23,7 @@ import java.io.File
 
     @FXML fun openFile(event: ActionEvent) {
         val files = FileChooser().let {
-            it.initialDirectory = Application.openFileInitialDirectory.load()?:File(System.getProperty("user.home"))
+            it.initialDirectory = Application.openFileInitialDirectory.load().value?:File(System.getProperty("user.home"))
             it.showOpenMultipleDialog(stage)
         }
 

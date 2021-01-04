@@ -1,9 +1,19 @@
 {
   "pattern": {
-    "notSupported": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<text>.+)$",
-    "zoneEnter": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] You have entered (?<zone>.+)\\.$",
-    "characterLoggedIn": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<relation>.+): (?<character>.+) has logged in\\.?$",
-    "characterSkillApplied": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] ((YOUR)|(?<character>.+)'s) (?<skill>.+) (?<action>hits|heals|absorbs|regenerates|refreshes|emboldens|reduces|increases|zaps|multi attacks) (?<rest>.+)$",
-    "characterSay": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<character>.+) say(s)?( to the (?<listener>.+))?, \"(?<message>.+)\"$"
+    "notSupported": {
+      "value": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<text>.+)$"
+    },
+    "zoneEnter": {
+      "value": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] You have entered (?<zone>.+)\\.$"
+    },
+    "characterLoggedIn": {
+      "value": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<relation>.+): (?<character>.+) has logged in\\.?$"
+    },
+    "characterSkillApplied": {
+      "value": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] ((YOUR)|(?<character>.+)'s) (?<skill>.+) (?<action>hits|heals|absorbs|regenerates|refreshes|emboldens|reduces|increases|zaps|multi attacks) (?<rest>.+)$"
+    },
+    "characterSay": {
+      "value": "^\\(\\d{10}\\)\\[(?<dateTime>[:\\s\\w]{24})] (?<character>.+) say(s)?( to the (?<listener>.+))?, \"(?<message>.+)\"$"
+    }
   }
 }
