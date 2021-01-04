@@ -4,7 +4,9 @@ package com.github.windchopper.tools.everquest.log.parser
 
 import com.github.windchopper.common.fx.cdi.ResourceBundleLoad
 import com.github.windchopper.common.fx.cdi.form.StageFormLoad
-import com.github.windchopper.common.preferences.impl.*
+import com.github.windchopper.common.preferences.entries.*
+import com.github.windchopper.common.preferences.types.*
+import com.github.windchopper.common.preferences.storages.*
 import com.github.windchopper.common.util.ClassPathResource
 import javafx.stage.Stage
 import org.jboss.weld.environment.se.Weld

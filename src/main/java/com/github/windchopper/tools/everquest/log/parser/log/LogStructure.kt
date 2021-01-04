@@ -3,10 +3,9 @@
 package com.github.windchopper.tools.everquest.log.parser.log
 
 import com.github.windchopper.common.preferences.PreferencesEntryFlatType
-import com.github.windchopper.common.preferences.impl.BufferedEntry
-import com.github.windchopper.common.preferences.impl.CompositeEntry
-import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesComposition
+import com.github.windchopper.common.preferences.entries.*
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesBufferLifetime
+import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesComposition
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
