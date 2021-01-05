@@ -42,9 +42,9 @@ class Application: javafx.application.Application() {
             mapOf(PreferencesKey.MAIN to mainPreferencesStorage, PreferencesKey.INITIAL to initialPreferencesStorage))
                 .loadFrom(PreferencesKey.MAIN)
                 .loadFrom(PreferencesKey.INITIAL)
-                .loadNewer(true)
+                .loadNewer()
                 .propagateTo(PreferencesKey.MAIN)
-                .propagateOlder(true)
+                .propagateOlder()
 
         val preferencesBufferLifetime = Duration.ofMinutes(1)
 
