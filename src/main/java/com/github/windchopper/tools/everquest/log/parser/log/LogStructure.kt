@@ -2,18 +2,21 @@
 
 package com.github.windchopper.tools.everquest.log.parser.log
 
-import com.github.windchopper.common.preferences.PreferencesEntryFlatType
 import com.github.windchopper.common.preferences.entries.*
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesBufferLifetime
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesComposition
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.ConcurrentSkipListMap
+import java.util.concurrent.CopyOnWriteArraySet
 import java.util.regex.Matcher
-import java.util.regex.Pattern
+import java.util.stream.Collectors
+import java.util.stream.Collectors.toCollection
+import java.util.stream.Stream
 import kotlin.reflect.full.memberProperties
 
-abstract class LogEvent(val dateTime: LocalDateTime) {
+abstract class LogEvent(var dateTime: LocalDateTime) {
 
     override fun toString(): String {
         return with(this::class) {
@@ -25,7 +28,7 @@ abstract class LogEvent(val dateTime: LocalDateTime) {
 
 }
 
-class NotSupportedEvent(dateTime: LocalDateTime, val text: String): LogEvent(dateTime)
+class AnyEvent(dateTime: LocalDateTime, var text: String): LogEvent(dateTime)
 
 class ZoneEnterEvent(dateTime: LocalDateTime, val zone: String): LogEvent(dateTime)
 
@@ -37,22 +40,16 @@ class CharacterSkillAppliedEvent(dateTime: LocalDateTime, character: String, val
 
 class CharacterSayEvent(dateTime: LocalDateTime, character: String, val listener: String?, val message: String): CharacterEvent(dateTime, character)
 
-abstract class LogEventFactory {
+abstract class LogEventFactory<EventType: LogEvent>
 
-    protected val dateTimeFormatter = DateTimeFormatter.ofPattern("EE MMM ppd HH:mm:ss yyyy", Locale.ENGLISH)
-    protected val patternType = PreferencesEntryFlatType(Pattern::compile, Pattern::pattern)
+class AnyEventFactory: LogEventFactory<AnyEvent>() {
 
-    abstract fun extract(text: String): LogEvent?
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern("EE MMM ppd HH:mm:ss yyyy", Locale.ENGLISH)
+    private val anyPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/any", PatternType()))
 
-}
-
-class NotSupportedEventFactory: LogEventFactory() {
-
-    private val notSupportedPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/notSupported", patternType))
-
-    override fun extract(text: String): LogEvent? {
-        return notSupportedPattern.load().value.matcher(text).takeIf(Matcher::matches)
-            ?.let { matcher -> NotSupportedEvent(
+    fun extract(text: String): AnyEvent? {
+        return anyPattern.load().value.matcher(text).takeIf(Matcher::matches)
+            ?.let { matcher -> AnyEvent(
                 LocalDateTime.parse(matcher.group("dateTime"), dateTimeFormatter),
                 matcher.group("text"))
             }
@@ -60,64 +57,116 @@ class NotSupportedEventFactory: LogEventFactory() {
 
 }
 
-class ZoneEnterEventFactory: LogEventFactory() {
+abstract class SpecificEventFactory<EventType: LogEvent>: LogEventFactory<EventType>() {
 
-    private val zoneEnterPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/zoneEnter", patternType))
+    abstract fun extract(rawEvent: AnyEvent): EventType?
 
-    override fun extract(text: String): ZoneEnterEvent? {
-        return zoneEnterPattern.load().value.matcher(text).takeIf(Matcher::matches)
-            ?.let { matcher -> ZoneEnterEvent(
-                LocalDateTime.parse(matcher.group("dateTime"), dateTimeFormatter),
-                matcher.group("zone"))
+}
+
+class ZoneEnterEventFactory: SpecificEventFactory<ZoneEnterEvent>() {
+
+    private val zoneEnterPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/zoneEnter", PatternType()))
+
+    override fun extract(rawEvent: AnyEvent): ZoneEnterEvent? {
+        return zoneEnterPattern.load().value.matcher(rawEvent.text).takeIf(Matcher::matches)
+            ?.let { matcher ->
+                ZoneEnterEvent(rawEvent.dateTime, matcher.group("zone"))
             }
     }
 
 }
 
-class CharacterLoggedInEventFactory: LogEventFactory() {
+class CharacterLoggedInEventFactory: SpecificEventFactory<CharacterLoggedInEvent>() {
 
-    private val characterLoggedInPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterLoggedIn", patternType))
+    private val characterLoggedInPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterLoggedIn", PatternType()))
 
-    override fun extract(text: String): CharacterLoggedInEvent? {
-        return characterLoggedInPattern.load().value.matcher(text).takeIf(Matcher::matches)
-            ?.let { matcher -> CharacterLoggedInEvent(
-                LocalDateTime.parse(matcher.group("dateTime"), dateTimeFormatter),
-                matcher.group("relation"),
-                matcher.group("character"))
+    override fun extract(rawEvent: AnyEvent): CharacterLoggedInEvent? {
+        return characterLoggedInPattern.load().value.matcher(rawEvent.text).takeIf(Matcher::matches)
+            ?.let { matcher ->
+                CharacterLoggedInEvent(rawEvent.dateTime, matcher.group("relation"), matcher.group("character"))
             }
     }
 
 }
 
-class CharacterSkillAppliedEventFactory: LogEventFactory() {
+class CharacterSkillAppliedEventFactory: SpecificEventFactory<CharacterSkillAppliedEvent>() {
 
-    private val characterSkillAppliedPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterSkillApplied", patternType))
+    private val characterSkillAppliedPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterSkillApplied", PatternType()))
 
-    override fun extract(text: String): CharacterSkillAppliedEvent? {
-        return characterSkillAppliedPattern.load().value.matcher(text).takeIf(Matcher::matches)
-            ?.let { matcher -> CharacterSkillAppliedEvent(
-                LocalDateTime.parse(matcher.group("dateTime"), dateTimeFormatter),
-                matcher.group("character")?:"YOU",
-                matcher.group("skill"),
-                matcher.group("action"),
-                matcher.group("rest"))
+    override fun extract(rawEvent: AnyEvent): CharacterSkillAppliedEvent? {
+        return characterSkillAppliedPattern.load().value.matcher(rawEvent.text).takeIf(Matcher::matches)
+            ?.let { matcher ->
+                CharacterSkillAppliedEvent(rawEvent.dateTime, matcher.group("character")?:"YOU", matcher.group("skill"), matcher.group("action"), matcher.group("rest"))
             }
     }
 
 }
 
-class CharacterSayEventFactory: LogEventFactory() {
+class CharacterSayEventFactory: SpecificEventFactory<CharacterSayEvent>() {
 
-    private val characterSayPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterSay", patternType))
+    private val characterSayPattern = BufferedEntry(preferencesBufferLifetime, CompositeEntry(preferencesComposition, "pattern/characterSay", PatternType()))
 
-    override fun extract(text: String): CharacterSayEvent? {
-        return characterSayPattern.load().value.matcher(text).takeIf(Matcher::matches)
-            ?.let { matcher -> CharacterSayEvent(
-                LocalDateTime.parse(matcher.group("dateTime"), dateTimeFormatter),
-                matcher.group("character"),
-                matcher.group("listener"),
-                matcher.group("message"))
+    override fun extract(rawEvent: AnyEvent): CharacterSayEvent? {
+        return characterSayPattern.load().value.matcher(rawEvent.text).takeIf(Matcher::matches)
+            ?.let { matcher ->
+                CharacterSayEvent(rawEvent.dateTime, matcher.group("character"), matcher.group("listener"), matcher.group("message"))
             }
+    }
+
+}
+
+class EventParser {
+
+    companion object {
+
+        private val eventFactory = AnyEventFactory()
+        private val specificEventFactories = listOf(
+            CharacterSayEventFactory(),
+            CharacterSkillAppliedEventFactory(),
+            CharacterLoggedInEventFactory(),
+            ZoneEnterEventFactory())
+
+    }
+
+    private var lastParsedEvent: AnyEvent? = null
+    private val skippedLines: MutableList<String> = LinkedList()
+
+    fun parseRaw(lines: Stream<String>): List<AnyEvent> {
+        val events = LinkedList<AnyEvent>()
+
+        lines.forEach { line ->
+            val event = eventFactory.extract(line)
+
+            if (event == null) {
+                if (line.isNotBlank()) skippedLines.add(line)
+            } else {
+                if (skippedLines.isNotEmpty()) {
+                    lastParsedEvent?.let { presentLastParsedEvent ->
+                        presentLastParsedEvent.text += System.lineSeparator()
+                        presentLastParsedEvent.text += skippedLines.joinToString(System.lineSeparator())
+                    }
+
+                    skippedLines.clear()
+                }
+
+                lastParsedEvent = event
+                events.add(event)
+            }
+        }
+
+        return events
+    }
+
+    fun parseSpecific(rawEvents: Collection<AnyEvent>): Map<LocalDateTime, Set<LogEvent>> {
+        return rawEvents.parallelStream()
+            .map(this::parseSpecific)
+            .collect(Collectors.groupingBy(LogEvent::dateTime, ::ConcurrentSkipListMap,
+                toCollection(::CopyOnWriteArraySet)))
+    }
+
+    fun parseSpecific(rawEvent: AnyEvent): LogEvent {
+        return specificEventFactories.mapNotNull { factory -> factory.extract(rawEvent) }
+            .firstOrNull()?:rawEvent
     }
 
 }

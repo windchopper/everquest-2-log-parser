@@ -1,5 +1,10 @@
 module windchopper.tools.everquest.log.parser {
 
+    // exports for tests
+
+    exports com.github.windchopper.tools.everquest.log.parser;
+    exports com.github.windchopper.tools.everquest.log.parser.log;
+
     opens com.github.windchopper.tools.everquest.log.parser;
     opens com.github.windchopper.tools.everquest.log.parser.forms;
     opens com.github.windchopper.tools.everquest.log.parser.i18n;
