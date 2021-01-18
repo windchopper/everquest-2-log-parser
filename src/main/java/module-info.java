@@ -15,7 +15,6 @@ module windchopper.tools.everquest.log.parser {
     requires kotlin.reflect;
 
     requires java.prefs;
-    requires java.json;
 
     requires javafx.controls;
     requires javafx.fxml;
@@ -23,6 +22,8 @@ module windchopper.tools.everquest.log.parser {
     requires jakarta.annotation;
     requires jakarta.inject;
     requires jakarta.cdi;
+
+    requires com.fasterxml.jackson.databind;
 
     requires weld.se.core;
     requires weld.environment.common;
