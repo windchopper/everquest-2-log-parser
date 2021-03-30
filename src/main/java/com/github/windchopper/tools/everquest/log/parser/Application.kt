@@ -8,6 +8,7 @@ import com.github.windchopper.common.preferences.entries.*
 import com.github.windchopper.common.preferences.types.*
 import com.github.windchopper.common.preferences.storages.*
 import com.github.windchopper.common.util.ClassPathResource
+import javafx.application.Platform
 import javafx.stage.Stage
 import org.jboss.weld.environment.se.Weld
 import org.jboss.weld.environment.se.WeldContainer
@@ -72,4 +73,8 @@ class Application: javafx.application.Application() {
         weld.shutdown()
     }
 
+}
+
+fun main(vararg args: String) {
+    javafx.application.Application.launch(Application::class.java, *args)
 }
