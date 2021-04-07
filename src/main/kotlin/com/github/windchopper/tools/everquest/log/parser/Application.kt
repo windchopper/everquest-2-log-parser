@@ -8,7 +8,6 @@ import com.github.windchopper.common.preferences.entries.*
 import com.github.windchopper.common.preferences.types.*
 import com.github.windchopper.common.preferences.storages.*
 import com.github.windchopper.common.util.ClassPathResource
-import javafx.application.Platform
 import javafx.stage.Stage
 import org.jboss.weld.environment.se.Weld
 import org.jboss.weld.environment.se.WeldContainer
@@ -20,15 +19,16 @@ class Application: javafx.application.Application() {
 
     companion object {
 
-        const val FXML__EVENT_BROWSER_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/eventBrowserStage.fxml"
-        const val FXML__LOG_FILE_SELECTION_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/logFileSelectionStage.fxml"
-        const val FXML__PARSE_PROGRESS_STAGE = "com/github/windchopper/tools/everquest/log/parser/forms/parseProgressStage.fxml"
+        private const val FXML__ROOT = "com/github/windchopper/tools/everquest/log/parser/forms"
+
+        const val FXML__EVENT_BROWSER_STAGE = "${FXML__ROOT}/eventBrowserStage.fxml"
+        const val FXML__LOG_FILE_SELECTION_STAGE = "${FXML__ROOT}/logFileSelectionStage.fxml"
+        const val FXML__PARSE_PROGRESS_STAGE = "${FXML__ROOT}/parseProgressStage.fxml"
 
         private val resourceBundle = ResourceBundle.getBundle("com.github.windchopper.tools.everquest.log.parser.i18n.messages")
 
         val messages = resourceBundle.keySet()
-            .map { it to resourceBundle.getString(it) }
-            .toMap()
+            .associateWith(resourceBundle::getString)
 
         private val mainPreferencesStorage = PlatformStorage(
             Preferences.userRoot().node("com/github/windchopper/tools/everquest/log/parser"))
