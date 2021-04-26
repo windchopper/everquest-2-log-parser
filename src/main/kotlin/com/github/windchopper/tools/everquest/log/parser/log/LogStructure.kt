@@ -2,7 +2,8 @@
 
 package com.github.windchopper.tools.everquest.log.parser.log
 
-import com.github.windchopper.common.preferences.entries.*
+import com.github.windchopper.common.preferences.entries.BufferedEntry
+import com.github.windchopper.common.preferences.entries.CompositeEntry
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesBufferLifetime
 import com.github.windchopper.tools.everquest.log.parser.Application.Companion.preferencesComposition
 import java.time.LocalDateTime
@@ -157,7 +158,7 @@ class EventParser {
         return events
     }
 
-    fun parseSpecific(rawEvents: Collection<AnyEvent>): Map<LocalDateTime, Set<LogEvent>> {
+    fun parseSpecific(rawEvents: Collection<AnyEvent>): Map<LocalDateTime, Collection<LogEvent>> {
         return rawEvents.parallelStream()
             .map(this::parseSpecific)
             .collect(Collectors.groupingBy(LogEvent::dateTime, ::ConcurrentSkipListMap,
